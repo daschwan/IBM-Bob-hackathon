@@ -1,0 +1,7 @@
+# Keep text files LF in every checkout: evidence digests (hook, manifests) are byte-exact.
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.db binary
+*.mp4 binary
+*.pdf binary
