@@ -1,0 +1,4 @@
+{"ts": "2026-09-26T08:03:57.000Z", "level": "info", "module": "RuntimeLogging", "msg": "File logging enabled"}
+{"ts": "2026-09-26T08:03:00.000Z", "level": "debug", "module": "ChatManager", "msg": "Task setup complete", "taskId": "7c2e4a6b8d0f1e3a5c7b9d1f3e5a7c90", "data": "7c2e4a6b8d0f1e3a5c7b9d1f3e5a7c90"}
+{"ts": "2026-09-26T08:03:04.000Z", "level": "warn", "module": "Hooks", "msg": "PostToolUse hooks cannot block", "taskId": "7c2e4a6b8d0f1e3a5c7b9d1f3e5a7c90"}
+{"ts": "2026-09-26T08:03:06.000Z", "level": "debug", "module": "ChatManager", "msg": "Turn complete", "taskId": "7c2e4a6b8d0f1e3a5c7b9d1f3e5a7c90"}

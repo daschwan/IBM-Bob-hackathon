@@ -1,0 +1,8 @@
+{
+  "schema": "controlproof.snapshot/1",
+  "workspace": "ws-badcfg",
+  "files": [
+    "allowed/probe.txt",
+    "protected/test.txt"
+  ]
+}

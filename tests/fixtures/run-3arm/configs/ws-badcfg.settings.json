@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "^(write_file|apply_diff|search_and_replace|insert_content$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"C:\\Python312\\python.exe\" \"C:\\cp-run\\hook\\controlproof_hook.py\" CP-004-BADCFG --ledger \"C:\\cp-run\\evidence\\ledger.jsonl\" --nonce 5e1f0c2d9a7b3e41",
+            "timeout": 15
+          }
+        ]
+      }
+    ]
+  }
+}
