@@ -28,26 +28,38 @@ never rounded to `False` or `True`.
 
 ## 2. Lifecycle authority (independent source of ENFORCEABLE)
 
+Whether a lifecycle event can prevent a tool call is a property of the IBM Bob version, not of
+any session outcome. It is represented explicitly, per Bob version. Nothing about what happened
+in a session may feed back into it.
+
+`LifecycleAuthority` — frozen dataclass: `bob_version: str`, `blocking: Mapping[str, bool]`
+(event name → can a blocking hook exit at this event prevent the tool call), `source: str` (one
+sentence naming where the table comes from). Method `blocking_capable(event)` returns the table
+value, or `NOT_DETERMINED` for `None` or any event not in the table.
+
+`AUTHORITIES: dict[str, LifecycleAuthority]` with exactly these two entries:
+
 ```python
-LIFECYCLE_AUTHORITY = {
-    "SessionStart": False,
-    "UserPromptSubmit": True,
-    "PreToolUse": True,
-    "PostToolUse": False,
-    "Stop": False,
-}
+"2.1.0": {"SessionStart": False, "UserPromptSubmit": True, "PreToolUse": True,
+          "PostToolUse": False, "Stop": False}
+"2.2.0": {"SessionStart": False, "UserPromptSubmit": True, "PreToolUse": True,
+          "PostToolUse": False, "PostCompact": False, "Stop": False}
 ```
 
-`LIFECYCLE_AUTHORITY_SOURCE` is a one-sentence string: IBM Bob 2.1.0 hook runtime — only
-`UserPromptSubmit` and `PreToolUse` honour a blocking hook exit; other events log
-"<event> hooks cannot block"; observed in the author's pre-event research
-SPIKE-BOB-CONTROLPROOF-001 (2026-09-20).
+Sources (use these meanings for the `source` strings):
+- 2.1.0: IBM Bob 1.126.0+bob2.1.0 hook runtime; only UserPromptSubmit and PreToolUse honour a
+  blocking exit (exit code 2), other events log "<event> hooks cannot block"; observed in the
+  author's pre-event research SPIKE-BOB-CONTROLPROOF-001 (2026-09-20).
+- 2.2.0: IBM Bob 1.126.0+bob2.2.0 (commit 30bf4b86) hook runtime in the bob-code extension;
+  exit code 2 blocks except at SessionStart, PostCompact, PostToolUse and Stop, which log
+  "<event> hooks cannot block"; read from the installed extension on 2026-09-26. `PreCompact` is
+  deliberately absent: it fires around context compaction, not around a tool call, and whether
+  its blocking exit can prevent a tool call is not established, so it stays NOT_DETERMINED.
 
-`blocking_capable(event)` returns the table value; `None` or any event not in the table returns
-`NOT_DETERMINED`.
+`authority_for(bob_version)` returns the matching entry by exact key, or `None`.
 
-This table is a property of IBM Bob, not of any session outcome. Nothing about what happened in
-a session may feed back into it.
+Module-level `blocking_capable(event, authority)` returns `NOT_DETERMINED` when `authority` is
+`None`, otherwise `authority.blocking_capable(event)`.
 
 ## 3. Evidence schema
 
@@ -61,6 +73,7 @@ Later tasks produce these from real Bob artifacts; B1 only consumes them.
 |---|---|---|---|
 | `control_id` | str | required | Control identifier, e.g. `CP-001-PRE` |
 | `session_id` | str or None | None | Bob session the facts are bound to |
+| `bob_version` | str or None | None | IBM Bob version that ran the session, e.g. `2.2.0` (selects the lifecycle authority) |
 | `configured` | tri | NOT_DETERMINED | Hook for this control present in the applicable Bob config |
 | `configured_event` | str or None | None | Lifecycle event the config registers it under |
 | `ledger_rows` | int | 0 | Hook-ledger rows for this control bound to this session |
@@ -93,12 +106,14 @@ Implement each state as its own function, then `derive_states(facts) -> dict[str
 **enforceable** — the load-bearing rule. Implement as
 
 ```python
-def derive_enforceable(executed, actual_event):
+def derive_enforceable(executed, actual_event, authority):
 ```
 
-with exactly these two parameters. If `executed is True` it returns
-`blocking_capable(actual_event)`; otherwise NOT_DETERMINED. It must not read the policy decision,
-the cancellation, the after-state, or `enforced`. ENFORCEABLE is never computed from ENFORCED.
+with exactly these three parameters. If `executed is True` it returns
+`blocking_capable(actual_event, authority)`; otherwise NOT_DETERMINED. It must not read the
+policy decision, the cancellation, the after-state, or `enforced`. ENFORCEABLE is never computed
+from ENFORCED. `derive_states` passes `authority_for(facts.bob_version)`; an unknown or missing
+Bob version therefore gives ENFORCEABLE NOT_DETERMINED.
 
 **enforced** — evaluate in this order, first match wins:
 1. executed False → False
@@ -145,8 +160,9 @@ Expose `RESULT_LABELS`, `RESULT_TONE`, and `CONFIDENT_RESULTS` (the six "yes" co
 
 `ControlRecord` — frozen dataclass: `control_id`, `session_id`, `states` (dict), `result`,
 `label`, `tone`, `confident` (bool), `reason` (one plain sentence for the card face, naming the
-missing link or the outcome), `conflicts`, `configured_event`, `actual_event`,
-`lifecycle_authority_source`. `to_dict()` returns a JSON-serializable dict (states via
+missing link or the outcome), `conflicts`, `configured_event`, `actual_event`, `bob_version`,
+`lifecycle_authority_source` (the `source` of the authority used, or None when the Bob version
+is unknown). `to_dict()` returns a JSON-serializable dict (states via
 `state_to_json`, conflicts as dicts).
 
 `evaluate(facts) -> ControlRecord` runs `derive_states` then `classify`.
@@ -162,8 +178,8 @@ Do not use the words proven, secure, guaranteed, tamper-proof, or certified anyw
 
 ## Acceptance tests (`tests/test_model.py`, all required)
 
-Use a helper that builds `ControlFacts` with `bundle_verified=True` unless a test says otherwise.
-The three demo arms:
+Use a helper that builds `ControlFacts` with `bundle_verified=True` and `bob_version="2.2.0"`
+unless a test says otherwise. The three demo arms:
 - PRE: configured True, configured_event and actual_event `PreToolUse`, ledger_rows 2,
   ledger_corroborated True, target_in_payload True, policy_triggered True,
   bob_cancelled_citing_control True, target_exists_after False.
@@ -172,18 +188,24 @@ The three demo arms:
 - BADCFG: configured True, configured_event `PreToolUse`, ledger_rows 0, absence_witnessed True,
   target_exists_after True.
 
-1. `test_lifecycle_authority_table_exact` — the table equals the dict in section 2.
-2. `test_blocking_capable_unknown_is_not_determined` — `None` and `"Notification"` give NOT_DETERMINED.
+1. `test_lifecycle_authority_tables_exact` — `AUTHORITIES` has exactly the keys `2.1.0` and
+   `2.2.0`, and each `blocking` table equals the dict in section 2.
+2. `test_blocking_capable_unknown_is_not_determined` — under 2.2.0, `None`, `"Notification"` and
+   `"PreCompact"` give NOT_DETERMINED; any event with `authority=None` gives NOT_DETERMINED.
 3. `test_pre_arm_enforcement_verified` — states all True; result ENFORCEMENT_VERIFIED.
 4. `test_post_arm_observational_only` — states (✓ ✓ ✓ ✕ ✕); result OBSERVATIONAL_ONLY.
 5. `test_badcfg_arm_configured_not_executed` — configured True, executed False, observed False,
    enforceable NOT_DETERMINED, enforced False; result CONFIGURED_NOT_EXECUTED.
-6. `test_enforceable_independent_of_outcome` — for every event in the table plus `None` and an
-   unknown event, and every combination of policy_triggered, bob_cancelled_citing_control and
-   target_exists_after over {True, False, NOT_DETERMINED}: with executed True, enforceable equals
-   `blocking_capable(event)` and is identical across all combinations.
+6. `test_enforceable_independent_of_outcome` — for both Bob versions, every event in that
+   version's table plus `None` and an unknown event, and every combination of policy_triggered,
+   bob_cancelled_citing_control and target_exists_after over {True, False, NOT_DETERMINED}: with
+   executed True, enforceable equals `blocking_capable(event, authority)` and is identical across
+   all combinations.
 7. `test_derive_enforceable_signature` — `inspect.signature(derive_enforceable)` has exactly the
-   parameters `executed, actual_event`.
+   parameters `executed, actual_event, authority`.
+7b. `test_unknown_bob_version_is_not_determined` — PRE arm with `bob_version="9.9.9"` and again
+   with `None`: enforceable NOT_DETERMINED, result NOT_DETERMINED, `lifecycle_authority_source`
+   None.
 8. `test_enforceable_is_not_enforced` — PRE arm with target_exists_after True: enforceable True,
    enforced False, result is not ENFORCEMENT_VERIFIED.
 9. `test_ledger_alone_is_not_execution` — ledger_rows 3 with ledger_corroborated NOT_DETERMINED,
@@ -204,7 +226,7 @@ The three demo arms:
     EVIDENCE_NOT_VERIFIED and NO_EVIDENCE are not in CONFIDENT_RESULTS.
 17. `test_record_to_dict_json` — `json.dumps(evaluate(pre).to_dict())` works and a
     NOT_DETERMINED state serializes as `"not_determined"`.
-18. `test_wording` — no label, reason, or `LIFECYCLE_AUTHORITY_SOURCE` string contains (case
+18. `test_wording` — no label, reason, or authority `source` string contains (case
     insensitive) proven, secure, guaranteed, tamper-proof or certified.
 
 ## Stop condition
