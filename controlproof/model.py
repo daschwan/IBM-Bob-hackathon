@@ -47,14 +47,20 @@ def state_symbol(value: tri) -> str:
         return "\u2014"
     if value is True:
         return "\u2713"
-    return "\u2715"
+    if value is False:
+        return "\u2715"
+    raise TypeError(f"state_symbol: expected True, False or NOT_DETERMINED, got {value!r}")
 
 
 def state_to_json(value: tri) -> "bool | str":
     """Serialize a tri-valued state to a JSON-compatible type."""
     if value is NOT_DETERMINED:
         return "not_determined"
-    return bool(value)  # True or False
+    if value is True:
+        return True
+    if value is False:
+        return False
+    raise TypeError(f"state_to_json: expected True, False or NOT_DETERMINED, got {value!r}")
 
 
 # ---------------------------------------------------------------------------
@@ -144,6 +150,19 @@ class Conflict:
     detail: str
 
 
+_TRI_VALUES = (True, False, NOT_DETERMINED)
+_TRI_FIELDS = (
+    "configured",
+    "ledger_corroborated",
+    "target_in_payload",
+    "policy_triggered",
+    "bob_cancelled_citing_control",
+    "target_exists_after",
+)
+_BOOL_FIELDS = ("absence_witnessed", "bundle_verified")
+_OPTIONAL_STR_FIELDS = ("session_id", "bob_version", "configured_event", "actual_event")
+
+
 @dataclasses.dataclass(frozen=True)
 class ControlFacts:
     """Normalized facts about one control in one Bob session."""
@@ -163,6 +182,36 @@ class ControlFacts:
     target_exists_after: tri = NOT_DETERMINED
     conflicts: tuple[Conflict, ...] = ()
     bundle_verified: bool = False
+
+    def __post_init__(self) -> None:
+        if not isinstance(self.control_id, str) or not self.control_id:
+            raise TypeError("control_id must be a non-empty str")
+        for field in _TRI_FIELDS:
+            v = getattr(self, field)
+            if v is not True and v is not False and v is not NOT_DETERMINED:
+                raise TypeError(
+                    f"ControlFacts.{field} must be True, False or NOT_DETERMINED, got {v!r}"
+                )
+        for field in _BOOL_FIELDS:
+            v = getattr(self, field)
+            if type(v) is not bool:
+                raise TypeError(
+                    f"ControlFacts.{field} must be exactly bool, got {type(v).__name__!r}"
+                )
+        if type(self.ledger_rows) is not int or isinstance(self.ledger_rows, bool):
+            raise TypeError("ControlFacts.ledger_rows must be exactly int")
+        if self.ledger_rows < 0:
+            raise ValueError("ControlFacts.ledger_rows must be >= 0")
+        if not isinstance(self.conflicts, tuple) or not all(
+            isinstance(c, Conflict) for c in self.conflicts
+        ):
+            raise TypeError("ControlFacts.conflicts must be a tuple of Conflict")
+        for field in _OPTIONAL_STR_FIELDS:
+            v = getattr(self, field)
+            if v is not None and not isinstance(v, str):
+                raise TypeError(
+                    f"ControlFacts.{field} must be None or str, got {type(v).__name__!r}"
+                )
 
 
 def has_any_evidence(facts: ControlFacts) -> bool:
@@ -372,7 +421,7 @@ def classify(facts: ControlFacts, states: dict[str, tri]) -> str:
     enforced = states["enforced"]
 
     # 1. fail-closed gate
-    if not facts.bundle_verified:
+    if facts.bundle_verified is not True:
         return EVIDENCE_NOT_VERIFIED
 
     # 2. no evidence
