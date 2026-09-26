@@ -24,3 +24,4 @@ Prompt used to start a task (typed into the Bob Agent panel):
 |---|---|---|
 | B1 | [B1-core-state-model.md](B1-core-state-model.md) | Evidence schema, five states, lifecycle authority, independent ENFORCEABLE, result ladder |
 | B2 | [B2-evidence-ingestion.md](B2-evidence-ingestion.md) | Evidence ingestion, session binding, tool-use id correlation, corroborated EXECUTED, model input hardening |
+| B3 | [B3-hook-and-conflicts.md](B3-hook-and-conflicts.md) | ControlProof hook, conflict detection (10 codes), B2 carry-over fixes |

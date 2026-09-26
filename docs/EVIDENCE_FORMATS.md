@@ -14,7 +14,8 @@ extension and its local task store (`~/.bob/db/bob.db`).
   against the tool name.
 - **Hook payload** (JSON on the hook's stdin) for PreToolUse: `session_id` (Bob's root task id),
   `cwd`, `hook_event_name`, `tool_name`, `tool_input` (the tool arguments), `tool_use_id` (the
-  tool call id, e.g. `tooluse_…`).
+  tool call id, e.g. `tooluse_…`). PostToolUse adds `tool_response` and fires only when the
+  tool call did not end in an error.
 - **Blocking:** exit code 2 blocks, except at SessionStart, PostCompact, PostToolUse and Stop,
   where Bob logs `"<event> hooks cannot block"` and continues.
 - **Blocked tool call:** Bob records the tool result text
@@ -64,9 +65,13 @@ snapshots/<workspace>.AFTER.json  workspace after-state (below)
   "controls": [
     {"control_id": "CP-001-PRE", "workspace": "ws-pre",
      "workspace_path": "C:\\cp-run\\ws-pre", "session_id": "<Bob task id>"}
-  ]
+  ],
+  "hook": {"path": "hook/controlproof_hook.py", "sha256": "<sha256 of the hook file>",
+           "name": "controlproof-hook", "version": "1.0.0"}
 }
 ```
+
+`hook` is optional; when present it names the hook the run declares it used.
 
 `session_id` is the Bob session the run claims for that control. It is a claim to be checked,
 not a fact.
@@ -79,9 +84,13 @@ not a fact.
  "hook_event_name": "PreToolUse", "tool_name": "write_file",
  "tool_use_id": "<payload tool_use_id>", "tool_input_path": "protected/test.txt",
  "decision": "DENY", "policy_triggered": true, "has_tool_response": false,
- "exit_code": 2, "hook_sha256": "<sha256 of the hook script>",
- "hook_invoked_at": "2026-09-26T08:00:44.000Z"}
+ "exit_code": 2, "hook_name": "controlproof-hook", "hook_version": "1.0.0",
+ "hook_sha256": "<sha256 of the hook script>", "hook_invoked_at": "2026-09-26T08:00:44.000Z"}
 ```
+
+When the hook denies a write it exits 2 and prints this reason on stderr, which Bob records as
+the cancellation text:
+`ControlProof <control_id> denied this write: deny writes under protected/. nonce=<run_nonce> event=<hook_event_name>`
 
 `decision` is `ALLOW` or `DENY`. A ledger row is the hook's own report; on its own it does not
 show that the hook ran.
