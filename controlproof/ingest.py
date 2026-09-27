@@ -80,6 +80,9 @@ class BobToolCall:
     name: str
     arguments: dict
     result: "str | None"
+    result_is_error: object = None
+    result_signature_id: "str | None" = None
+    result_signature_name: "str | None" = None
 
 
 def bob_tool_calls(task_export: dict) -> list[BobToolCall]:
@@ -106,14 +109,32 @@ def bob_tool_calls(task_export: dict) -> list[BobToolCall]:
                     results.append(result_content)
                     j += 1
                 # Pair positionally
+                result_msgs = [messages[i + 1 + ki] for ki in range(j - (i + 1))]
                 for k, tc in enumerate(tool_calls_data):
                     result = results[k] if k < len(results) else None
+                    # Extract Bob 2.2.0 toolUsage.signature fields if present
+                    result_is_error: object = None
+                    result_signature_id: "str | None" = None
+                    result_signature_name: "str | None" = None
+                    if k < len(result_msgs):
+                        tool_usage = result_msgs[k].get("data", {}).get("toolUsage")
+                        if isinstance(tool_usage, dict):
+                            sig = tool_usage.get("signature")
+                            if isinstance(sig, dict):
+                                result_is_error = sig.get("isError")
+                                sig_id = sig.get("id")
+                                result_signature_id = sig_id if isinstance(sig_id, str) else None
+                                sig_name = sig.get("name")
+                                result_signature_name = sig_name if isinstance(sig_name, str) else None
                     calls.append(
                         BobToolCall(
                             id=tc.get("id", ""),
                             name=tc.get("name", ""),
                             arguments=tc.get("arguments", {}),
                             result=result,
+                            result_is_error=result_is_error,
+                            result_signature_id=result_signature_id,
+                            result_signature_name=result_signature_name,
                         )
                     )
                 i = j
@@ -184,6 +205,7 @@ _CANCEL_PREFIX_RE = re.compile(r"^Tool call to (\S+) was cancelled: ")
 _CANCEL_RE = re.compile(r"ControlProof (\S+) denied this write")
 _NONCE_RE = re.compile(r"nonce=(\S+)")
 _EVENT_RE = re.compile(r"event=(\S+)")
+_CANCEL22_PREFIX_RE = re.compile(r"^ControlProof (\S+) denied this write: ")
 
 
 def parse_cancellation(result: Any) -> "dict | None":
@@ -210,6 +232,51 @@ def parse_cancellation(result: Any) -> "dict | None":
     return {
         "tool_name": tool_name,
         "control_id": m.group(1),
+        "nonce": nonce_m.group(1) if nonce_m else None,
+        "event": event_m.group(1) if event_m else None,
+    }
+
+
+def cancellation_for_call(call: BobToolCall) -> "dict | None":
+    """Return cancellation info for *call* using 2.1.0 or 2.2.0 form, or None.
+
+    Returns dict with keys 'form', 'tool_name', 'control_id', 'nonce', 'event'.
+    Form 2.1: the result carries the standard Bob cancelled prefix and cites this tool.
+    Form 2.2: isError is exactly True, signature id/name match the call, and the
+    content begins with 'ControlProof <id> denied this write: '.
+    """
+    # Form 2.1 — classic Bob cancellation prefix
+    parsed = parse_cancellation(call.result)
+    if parsed is not None and parsed["tool_name"] == call.name:
+        return {
+            "form": "2.1",
+            "tool_name": parsed["tool_name"],
+            "control_id": parsed["control_id"],
+            "nonce": parsed["nonce"],
+            "event": parsed["event"],
+        }
+
+    # Form 2.2 — Bob 2.2.0 stored form
+    if not isinstance(call.result, str):
+        return None
+    if call.result_is_error is not True:  # identity check: must be exactly bool True
+        return None
+    if not (isinstance(call.result_signature_id, str) and call.result_signature_id):
+        return None
+    if call.result_signature_id != call.id:
+        return None
+    if call.result_signature_name != call.name:
+        return None
+    m22 = _CANCEL22_PREFIX_RE.match(call.result)
+    if not m22:
+        return None
+    control_id = m22.group(1)
+    nonce_m = _NONCE_RE.search(call.result)
+    event_m = _EVENT_RE.search(call.result)
+    return {
+        "form": "2.2",
+        "tool_name": call.name,
+        "control_id": control_id,
         "nonce": nonce_m.group(1) if nonce_m else None,
         "event": event_m.group(1) if event_m else None,
     }
@@ -538,12 +605,8 @@ def ingest(evidence_dir: "str | Path") -> list[ControlEvidence]:
                     if tc.result is None:
                         all_have_result = False
                     else:
-                        parsed = parse_cancellation(tc.result)
-                        if (
-                            parsed is not None
-                            and parsed["control_id"] == control_id
-                            and parsed["tool_name"] == tc.name
-                        ):
+                        canc = cancellation_for_call(tc)
+                        if canc is not None and canc["control_id"] == control_id:
                             cancelled = True
                             break
                 if cancelled:

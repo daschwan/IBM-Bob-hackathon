@@ -16,6 +16,7 @@ from controlproof.ingest import (
     ControlEvidence,
     WRITE_TOOLS,
     bob_log_lines,
+    cancellation_for_call,
     control_config,
     ingest,
     load_settings,
@@ -218,23 +219,21 @@ def detect_conflicts(
         for tc in ev.bob_tool_calls:
             if tc.name not in WRITE_TOOLS:
                 continue
-            if not (tc.result and isinstance(tc.result, str)):
-                continue
-            parsed = parse_cancellation(tc.result)
-            if parsed is None or parsed["control_id"] != control_id:
+            canc = cancellation_for_call(tc)
+            if canc is None or canc["control_id"] != control_id:
                 continue
             # This is a cancellation attributed to this control
-            nonce_ok = (parsed["nonce"] == run_nonce)
+            nonce_ok = (canc["nonce"] == run_nonce)
             event_ok = True
-            if actual_event is not None and parsed["event"] is not None:
-                event_ok = (parsed["event"] == actual_event)
-            elif actual_event is not None and parsed["event"] is None:
+            if actual_event is not None and canc["event"] is not None:
+                event_ok = (canc["event"] == actual_event)
+            elif actual_event is not None and canc["event"] is None:
                 event_ok = False
             if not nonce_ok or not event_ok:
                 conflicts.append(_make_conflict(
                     "CANCELLATION_IDENTITY_MISMATCH",
-                    f"Cancellation for {control_id!r} has nonce={parsed['nonce']!r} "
-                    f"(expected {run_nonce!r}) and event={parsed['event']!r} "
+                    f"Cancellation for {control_id!r} has nonce={canc['nonce']!r} "
+                    f"(expected {run_nonce!r}) and event={canc['event']!r} "
                     f"(expected {actual_event!r}).",
                     ("bob_task", "run"),
                 ))
