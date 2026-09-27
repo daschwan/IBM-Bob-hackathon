@@ -18,8 +18,14 @@ extension and its local task store (`~/.bob/db/bob.db`).
   tool call did not end in an error.
 - **Blocking:** exit code 2 blocks, except at SessionStart, PostCompact, PostToolUse and Stop,
   where Bob logs `"<event> hooks cannot block"` and continues.
-- **Blocked tool call:** Bob records the tool result text
-  `Tool call to <tool name> was cancelled: <reason>`, where the reason is the hook's stderr.
+- **Blocked tool call — correction (2026-09-27, from the live run):** IBM Bob 2.2.0's task store
+  records a hook-blocked call as a tool result whose whole `content` is the hook's reason
+  (stderr), with `toolUsage.signature` = `{"id": <the call's tool_use_id>, "name": <tool>,
+  "arguments": {...}, "isError": true}`. The text `Tool call to <tool name> was cancelled:
+  <reason>` is what Bob 2.1.0 stored (seen in the pre-event rehearsal) and what Bob 2.2.0 sends
+  to its model; an earlier version of this document wrongly gave it as 2.2.0's stored form.
+  Every 2.2.0 tool result carries `toolUsage.signature`, with `isError: false` when the call
+  succeeded.
 - **Invalid matcher:** Bob logs `Ignoring invalid <event> hook matcher "<matcher>"` and does not
   run that hook.
 - **Governed write tools:** `write_file`, `apply_diff`, `insert_content`, `search_and_replace`
@@ -27,8 +33,8 @@ extension and its local task store (`~/.bob/db/bob.db`).
 - **Task store:** SQLite tables `tasks` (`id`, `project_id`, `env` JSON with `workspace`, …) and
   `messages` (`id`, `task_id`, `role`, `data` JSON, `created_at` ms). An assistant message's
   `data.toolCalls` is a list of `{"id", "name", "arguments"}`. Tool results are separate
-  `role: "tool"` messages with no call id of their own: the tool messages that follow an
-  assistant message answer its `toolCalls` in order.
+  `role: "tool"` messages that follow an assistant message and answer its `toolCalls` in order;
+  in 2.2.0 each also carries `toolUsage.signature.id`, the id of the call it answers.
 - **Runtime log** (when file logging is enabled): one JSON object per line with `ts`, `level`,
   `module`, `msg`, and `taskId` for task-scoped lines.
 

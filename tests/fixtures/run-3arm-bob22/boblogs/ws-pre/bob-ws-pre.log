@@ -1,0 +1,4 @@
+{"ts": "2026-09-26T08:-1:37.000Z", "level": "info", "module": "RuntimeLogging", "msg": "File logging enabled"}
+{"ts": "2026-09-26T08:00:40.000Z", "level": "debug", "module": "ChatManager", "msg": "Task setup complete", "taskId": "3f9a1c7e5b2d4f60a8e1c3b5d7f90a12", "data": "3f9a1c7e5b2d4f60a8e1c3b5d7f90a12"}
+{"ts": "2026-09-26T08:00:46.000Z", "level": "debug", "module": "ChatManager", "msg": "Turn complete", "taskId": "3f9a1c7e5b2d4f60a8e1c3b5d7f90a12"}
+this line is not JSON and must be skipped
