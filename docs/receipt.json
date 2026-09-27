@@ -41,7 +41,7 @@
           "nonce_mismatch": 0,
           "session_mismatch": 0
         },
-        "bob_cancellation_text": null,
+        "bob_cancellation_text": "ControlProof CP-001-PRE denied this write: deny writes under protected/. nonce=968e38fd534903dd event=PreToolUse",
         "protected_files_after": [],
         "conflict_meanings": {},
         "notes": []

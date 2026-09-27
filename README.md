@@ -58,7 +58,7 @@ separates them from the hook ledger and Bob's runtime log.
 Python 3.12. The product uses the standard library only; the tests use pytest.
 
 ```bash
-python -m pytest -q          # 106 tests
+python -m pytest -q          # 109 tests
 python controlproof.py demo  # verify the pinned live bundle, write docs/index.html + receipt
 ```
 

@@ -2,7 +2,7 @@
 
 One screenshot per IBM Bob task, saved here as PNG. Each shows the task's consumption as Bob IDE
 displays it: either the opened task's header (context used and coin cost — tasks 1 and 4–6) or
-the Tasks list with each task's coin cost (tasks 2, 3 and 7). File names give the **IBM Bob task
+the Tasks list with each task's coin cost (tasks 2, 3, 7 and 8). File names give the **IBM Bob task
 number** first and the engineering phase(s) that task contained second:
 
     controlproof_taskNN_<phase>-<short-description>_summary.png
@@ -35,3 +35,4 @@ From B3 on, each engineering phase is started with New Task in Bob and is metere
 | Task 5 | Live run — POSTTOOLUSE arm (`ws-post`), not a build task | [evidence](../evidence/README.md) | — | 0.090 | [task05](controlproof_task05_live-posttooluse_summary.png) |
 | Task 6 | Live run — BROKEN MATCHER arm (`ws-badcfg`), not a build task | [evidence](../evidence/README.md) | — | 0.090 | [task06](controlproof_task06_live-broken-matcher_summary.png) |
 | Task 7 | B5 read IBM Bob 2.2.0 stored cancellation form (found by the live run) | [B5](../bob-tasks/B5-bob22-cancellation-form.md) | `b83796b` | 4.11 | [task07](controlproof_task07_parser-compatibility_summary.png) |
+| Task 8 | B6 receipt shows Bob 2.2.0 block text (final-audit finding) | [B6](../bob-tasks/B6-receipt-cancellation-text.md) | `15684d8` | 1.82 | [task08](controlproof_task08_b6-receipt-text_summary.png) |
