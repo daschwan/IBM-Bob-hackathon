@@ -30,3 +30,7 @@ From B3 on, each engineering phase is started with New Task in Bob and is metere
 |---|---|---|---|---|---|
 | Task 2 | B3 hook + conflict detection | [B3](../bob-tasks/B3-hook-and-conflicts.md) | `5babfd8` | 5.18 | [task02](controlproof_task02_b3-conflicts_summary.png) |
 | Task 3 | B4 final build (bundle, capture, receipt, judge page) | [B4](../bob-tasks/B4-final-build.md) | `1cebbbb` | 5.16 | [task03](controlproof_task03_b4-final-build_summary.png) |
+| Task 4 | Live run — PRETOOLUSE arm (`ws-pre`), not a build task | [evidence](../evidence/README.md) | — | 0.090 | [task04](controlproof_task04_live-pretooluse_summary.png) |
+| Task 5 | Live run — POSTTOOLUSE arm (`ws-post`), not a build task | [evidence](../evidence/README.md) | — | 0.090 | [task05](controlproof_task05_live-posttooluse_summary.png) |
+| Task 6 | Live run — BROKEN MATCHER arm (`ws-badcfg`), not a build task | [evidence](../evidence/README.md) | — | 0.090 | [task06](controlproof_task06_live-broken-matcher_summary.png) |
+| Task 7 | B5 read IBM Bob 2.2.0 stored cancellation form (found by the live run) | [B5](../bob-tasks/B5-bob22-cancellation-form.md) | `b83796b` | 4.11 | [task07](controlproof_task07_parser-compatibility_summary.png) |
