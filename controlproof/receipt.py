@@ -13,8 +13,8 @@ from controlproof.bundle import verify_bundle
 from controlproof.conflicts import CONFLICT_MEANINGS, assess
 from controlproof.ingest import (
     WRITE_TOOLS,
+    cancellation_for_call,
     is_protected,
-    parse_cancellation,
 )
 from controlproof.model import (
     evaluate,
@@ -42,7 +42,7 @@ def _bob_cancellation_text(ev, workspace_path: str, protected_prefix: str) -> "s
         if not is_protected(tc.arguments.get("path"), workspace_path, protected_prefix):
             continue
         if tc.result is not None:
-            parsed = parse_cancellation(tc.result)
+            parsed = cancellation_for_call(tc)
             if parsed is not None:
                 return tc.result
     return None
