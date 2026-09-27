@@ -180,7 +180,7 @@ WRITE_TOOLS: frozenset[str] = frozenset(
     {"write_file", "apply_diff", "insert_content", "search_and_replace"}
 )
 
-_CANCEL_PREFIX = "Tool call to "
+_CANCEL_PREFIX_RE = re.compile(r"^Tool call to (\S+) was cancelled: ")
 _CANCEL_RE = re.compile(r"ControlProof (\S+) denied this write")
 _NONCE_RE = re.compile(r"nonce=(\S+)")
 _EVENT_RE = re.compile(r"event=(\S+)")
@@ -189,20 +189,26 @@ _EVENT_RE = re.compile(r"event=(\S+)")
 def parse_cancellation(result: Any) -> "dict | None":
     """Parse a Bob tool result string for a ControlProof cancellation.
 
-    Returns dict with keys 'control_id', 'nonce' (or None), 'event' (or None),
-    or None if *result* is not a matching cancellation string.
+    Returns dict with keys 'tool_name', 'control_id', 'nonce' (or None),
+    'event' (or None), or None if *result* is not a matching cancellation string.
+
+    Requires the full Bob prefix ``Tool call to <tool_name> was cancelled: ``.
+    A message like ``Tool call to write_file failed: ...`` is not a cancellation.
     """
     if not isinstance(result, str):
         return None
-    # Must start with the standard Bob cancellation prefix
-    if not result.startswith(_CANCEL_PREFIX):
+    # Must have the full standard Bob cancellation prefix
+    prefix_m = _CANCEL_PREFIX_RE.match(result)
+    if not prefix_m:
         return None
+    tool_name = prefix_m.group(1)
     m = _CANCEL_RE.search(result)
     if not m:
         return None
     nonce_m = _NONCE_RE.search(result)
     event_m = _EVENT_RE.search(result)
     return {
+        "tool_name": tool_name,
         "control_id": m.group(1),
         "nonce": nonce_m.group(1) if nonce_m else None,
         "event": event_m.group(1) if event_m else None,
@@ -536,6 +542,7 @@ def ingest(evidence_dir: "str | Path") -> list[ControlEvidence]:
                         if (
                             parsed is not None
                             and parsed["control_id"] == control_id
+                            and parsed["tool_name"] == tc.name
                         ):
                             cancelled = True
                             break
