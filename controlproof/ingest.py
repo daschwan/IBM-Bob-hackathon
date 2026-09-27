@@ -100,6 +100,9 @@ def bob_tool_calls(task_export: dict) -> list[BobToolCall]:
                 j = i + 1
                 while j < len(messages) and messages[j].get("role") == "tool":
                     result_content = messages[j].get("data", {}).get("content")
+                    # Non-string content gives None (change 3)
+                    if not isinstance(result_content, str):
+                        result_content = None
                     results.append(result_content)
                     j += 1
                 # Pair positionally
@@ -177,6 +180,34 @@ WRITE_TOOLS: frozenset[str] = frozenset(
     {"write_file", "apply_diff", "insert_content", "search_and_replace"}
 )
 
+_CANCEL_PREFIX = "Tool call to "
+_CANCEL_RE = re.compile(r"ControlProof (\S+) denied this write")
+_NONCE_RE = re.compile(r"nonce=(\S+)")
+_EVENT_RE = re.compile(r"event=(\S+)")
+
+
+def parse_cancellation(result: Any) -> "dict | None":
+    """Parse a Bob tool result string for a ControlProof cancellation.
+
+    Returns dict with keys 'control_id', 'nonce' (or None), 'event' (or None),
+    or None if *result* is not a matching cancellation string.
+    """
+    if not isinstance(result, str):
+        return None
+    # Must start with the standard Bob cancellation prefix
+    if not result.startswith(_CANCEL_PREFIX):
+        return None
+    m = _CANCEL_RE.search(result)
+    if not m:
+        return None
+    nonce_m = _NONCE_RE.search(result)
+    event_m = _EVENT_RE.search(result)
+    return {
+        "control_id": m.group(1),
+        "nonce": nonce_m.group(1) if nonce_m else None,
+        "event": event_m.group(1) if event_m else None,
+    }
+
 
 def normalize_bob_version(value: Any) -> "str | None":
     """Normalize a Bob product version string to its bob-version component.
@@ -209,19 +240,18 @@ def _norm_path(p: "str | None") -> str:
     return p.lower()
 
 
-def is_protected(
-    path: "str | None",
-    workspace_path: "str | None",
-    protected_prefix: "str | None",
-) -> bool:
-    """Return True iff *path* refers to a file under *protected_prefix* in *workspace_path*."""
-    # 1. not a non-empty string → False
+def workspace_relative(path: "str | None", workspace_path: "str | None") -> "str | None":
+    """Steps 1–4 of is_protected: normalize path to workspace-relative form.
+
+    Returns the normalized, lowercased, workspace-relative path, or None when
+    is_protected would return False before step 5.
+    """
+    # 1. not a non-empty string → None
     if not isinstance(path, str) or not path:
-        return False
+        return None
 
     norm_path = _norm_path(path)
     norm_ws = _norm_path(workspace_path).rstrip("/")
-    norm_prefix = _norm_path(protected_prefix)
 
     # 3. absolute path handling
     is_absolute = bool(re.match(r"[a-z]:/", norm_path)) or norm_path.startswith("/")
@@ -229,16 +259,30 @@ def is_protected(
         if norm_ws and norm_path.startswith(norm_ws + "/"):
             norm_path = norm_path[len(norm_ws) + 1 :]
         else:
-            return False
+            return None
 
     # 4. posixpath.normpath; reject traversals
     norm_path = posixpath.normpath(norm_path)
     if norm_path == ".." or norm_path.startswith("../"):
+        return None
+
+    return norm_path
+
+
+def is_protected(
+    path: "str | None",
+    workspace_path: "str | None",
+    protected_prefix: "str | None",
+) -> bool:
+    """Return True iff *path* refers to a file under *protected_prefix* in *workspace_path*."""
+    rel = workspace_relative(path, workspace_path)
+    if rel is None:
         return False
 
+    norm_prefix = _norm_path(protected_prefix).rstrip("/")
+
     # 5. check prefix (case-insensitive already via _norm_path)
-    norm_prefix = norm_prefix.rstrip("/")
-    return norm_path == norm_prefix or norm_path.startswith(norm_prefix + "/")
+    return rel == norm_prefix or rel.startswith(norm_prefix + "/")
 
 
 def control_config(
@@ -487,12 +531,14 @@ def ingest(evidence_dir: "str | Path") -> list[ControlEvidence]:
                 for tc in write_calls:
                     if tc.result is None:
                         all_have_result = False
-                    elif (
-                        tc.result.startswith(f"Tool call to {tc.name} was cancelled")
-                        and control_id in tc.result
-                    ):
-                        cancelled = True
-                        break
+                    else:
+                        parsed = parse_cancellation(tc.result)
+                        if (
+                            parsed is not None
+                            and parsed["control_id"] == control_id
+                        ):
+                            cancelled = True
+                            break
                 if cancelled:
                     bob_cancelled = True
                 elif all_have_result:
@@ -510,11 +556,24 @@ def ingest(evidence_dir: "str | Path") -> list[ControlEvidence]:
             target_exists_after: tri = NOT_DETERMINED
             notes.append("Snapshot missing; target_exists_after is NOT_DETERMINED.")
         else:
-            files = snapshot.get("files", [])
-            found_protected = any(
-                is_protected(f, workspace_path, protected_prefix) for f in files
-            )
-            target_exists_after = True if found_protected else False
+            # Change 4: missing, non-list, or non-string element → NOT_DETERMINED
+            if "files" not in snapshot:
+                target_exists_after = NOT_DETERMINED
+                notes.append(
+                    "Snapshot files field is missing; target_exists_after is NOT_DETERMINED."
+                )
+            else:
+                files = snapshot["files"]
+                if not isinstance(files, list) or any(not isinstance(f, str) for f in files):
+                    target_exists_after = NOT_DETERMINED
+                    notes.append(
+                        "Snapshot files field is malformed; target_exists_after is NOT_DETERMINED."
+                    )
+                else:
+                    found_protected = any(
+                        is_protected(f, workspace_path, protected_prefix) for f in files
+                    )
+                    target_exists_after = True if found_protected else False
 
         facts = ControlFacts(
             control_id=control_id,

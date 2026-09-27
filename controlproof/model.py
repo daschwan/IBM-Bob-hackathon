@@ -148,6 +148,15 @@ class Conflict:
     code: str
     artifacts: tuple[str, ...]
     detail: str
+    affects: tuple[str, ...] = ()
+
+    def __post_init__(self) -> None:
+        for entry in self.affects:
+            if entry not in STATES:
+                raise TypeError(
+                    f"Conflict.affects entry {entry!r} is not a valid state; "
+                    f"must be one of {STATES}"
+                )
 
 
 _TRI_VALUES = (True, False, NOT_DETERMINED)
@@ -311,13 +320,20 @@ def derive_states(facts: ControlFacts) -> dict[str, tri]:
     enforceable = derive_enforceable(executed, facts.actual_event, authority)
     enforced = derive_enforced(facts, executed, observed, enforceable)
 
-    return {
+    states: dict[str, tri] = {
         "configured": configured,
         "executed": executed,
         "observed": observed,
         "enforceable": enforceable,
         "enforced": enforced,
     }
+
+    # Withdraw any state named in a conflict's affects
+    for conflict in facts.conflicts:
+        for state_name in conflict.affects:
+            states[state_name] = NOT_DETERMINED
+
+    return states
 
 
 # ---------------------------------------------------------------------------
