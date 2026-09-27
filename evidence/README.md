@@ -44,11 +44,13 @@ It was redacted before the bundle was pinned and published:
 | IBM Bob team id, user id and instance id (in Bob gateway / feature-flag log lines) | `boblogs/**/*.log` | `[redacted-id]` | 75 |
 | IBM Bob system prompt (the `system` message body and metadata, and the Bob mode block `_meta.mode` in the user message) | `bob_tasks/*.json` | `[redacted-bob-system-prompt]` | 6 |
 | IBM Bob tool definitions (`availableTools` in the user message) | `bob_tasks/*.json` | `[redacted-bob-tool-definitions]` | 3 |
+| *Kept, not redacted:* local machine paths, including the OS user name | configs, `RUN.json`, task exports, logs | — | — |
 
 Nothing ControlProof evaluates was touched: session and task ids, tool-use ids, tool names and
 arguments, tool results and their `toolUsage.signature` (including `isError`), lifecycle events,
 control ids, the nonce, ledger rows, hook digest, configs, snapshots, paths and timestamps are
-exactly as captured.
+exactly as captured. Local paths are kept because session binding compares Bob's recorded
+workspace path with the run's workspace path.
 
 - The unredacted capture is kept privately by the author, outside this repository. Its original
   manifest sha256 was `d27cbe1d904308e1af0ecbc274708ef02efd95d619a36c2a329b27a1f523863c`.

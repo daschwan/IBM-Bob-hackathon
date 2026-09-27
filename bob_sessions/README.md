@@ -1,13 +1,14 @@
 # IBM Bob task sessions
 
-Screenshots are taken in Bob IDE -> Tasks -> task header -> task session consumption summary,
-and saved here as PNG. File names give the **IBM Bob task number** first and the engineering
-phase(s) that task contained second:
+One screenshot per IBM Bob task, saved here as PNG. Each shows the task's consumption as Bob IDE
+displays it: either the opened task's header (context used and coin cost — tasks 1 and 4–6) or
+the Tasks list with each task's coin cost (tasks 2, 3 and 7). File names give the **IBM Bob task
+number** first and the engineering phase(s) that task contained second:
 
     controlproof_taskNN_<phase>-<short-description>_summary.png
 
-Cost is the value Bob shows on the task itself (the coin figure in the task header). Bob meters
-tasks, not engineering phases.
+Cost is the value Bob shows on the task itself (the coin figure). Bob meters tasks, not
+engineering phases.
 
 ## Bob Task 1 — engineering phases B1 and B2
 
