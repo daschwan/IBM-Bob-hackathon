@@ -29,3 +29,4 @@ From B3 on, each engineering phase is started with New Task in Bob and is metere
 | Bob task | Phase | Spec | Commit | Bob cost | Screenshot |
 |---|---|---|---|---|---|
 | Task 2 | B3 hook + conflict detection | [B3](../bob-tasks/B3-hook-and-conflicts.md) | `5babfd8` | 5.18 | [task02](controlproof_task02_b3-conflicts_summary.png) |
+| Task 3 | B4 final build (bundle, capture, receipt, judge page) | [B4](../bob-tasks/B4-final-build.md) | `1cebbbb` | 5.16 | [task03](controlproof_task03_b4-final-build_summary.png) |
