@@ -1,0 +1,135 @@
+{"ts":"2026-09-27T06:23:58.263Z","level":"info","module":"RuntimeLogging","msg":"File logging enabled","data":{"logFilePath":"C:\\Users\\dmcca\\Documents\\cp-live-final\\boblogs\\ws-pre-54aef276ea\\bob-ws-pre-p26840-20260926T232358.log"}}
+{"ts":"2026-09-27T06:23:58.264Z","level":"info","module":"Extension","msg":"Activating extension"}
+{"ts":"2026-09-27T06:23:58.729Z","level":"info","module":"Extension","msg":"Using translations: c:\\Users\\dmcca\\AppData\\Local\\Programs\\IBM Bob\\resources\\app\\extensions\\bob-code\\dist\\translations (without updates)"}
+{"ts":"2026-09-27T06:23:58.736Z","level":"debug","module":"MCP","msg":"McpHub initialized","data":{"globalScopeRoot":"C:\\Users\\dmcca\\.bob\\settings","globalConfigPath":"C:\\Users\\dmcca\\.bob\\settings\\mcp.json"}}
+{"ts":"2026-09-27T06:23:58.737Z","level":"info","module":"PolicyService","msg":"Initialising policy watcher on platform \"win32\""}
+{"ts":"2026-09-27T06:23:58.855Z","level":"info","module":"PolicyService","msg":"Starting native policy watcher for product \"com.ibm.bob\""}
+{"ts":"2026-09-27T06:24:03.991Z","level":"debug","module":"Auth","msg":"Found stored tokens, checking expiry"}
+{"ts":"2026-09-27T06:24:03.992Z","level":"debug","module":"Auth","msg":"Auth state changed to","data":"authenticated"}
+{"ts":"2026-09-27T06:24:03.993Z","level":"debug","module":"Harness","msg":"Auth state changed","data":{"state":"authenticated"}}
+{"ts":"2026-09-27T06:24:03.995Z","level":"debug","module":"Gateway","msg":"HTTP request","data":{"method":"GET","url":"https://api.us-east.bob.ibm.com/admin/v1/profile","bodySize":0}}
+{"ts":"2026-09-27T06:24:03.996Z","level":"info","module":"Auth","msg":"Restored session from stored tokens"}
+{"ts":"2026-09-27T06:24:04.450Z","level":"debug","module":"Gateway","msg":"Response received","data":{"status":200,"path":"/profile"}}
+{"ts":"2026-09-27T06:24:04.451Z","level":"debug","module":"Gateway","msg":"HTTP request complete","data":{"method":"GET","url":"https://api.us-east.bob.ibm.com/admin/v1/profile","status":200,"elapsedMs":456}}
+{"ts":"2026-09-27T06:24:04.457Z","level":"debug","module":"Gateway","msg":"HTTP request","data":{"method":"GET","url":"https://api.us-east.bob.ibm.com/admin/v1/teams/[redacted-id]/users/[redacted-id]","bodySize":0}}
+{"ts":"2026-09-27T06:24:04.463Z","level":"debug","module":"Gateway","msg":"HTTP request","data":{"method":"GET","url":"https://api.us-east.bob.ibm.com/inference/v1/model/info","bodySize":0}}
+{"ts":"2026-09-27T06:24:04.495Z","level":"info","module":"BobHarness","msg":"Telemetry client registered: bob-bob -> https://api.us-east.bob.ibm.com"}
+{"ts":"2026-09-27T06:24:04.495Z","level":"info","module":"BobHarness","msg":"Telemetry initialized (bob-bob)"}
+{"ts":"2026-09-27T06:24:04.498Z","level":"debug","module":"MCP:ConfigManager","msg":"Setting up config file listeners"}
+{"ts":"2026-09-27T06:24:04.763Z","level":"debug","module":"Gateway","msg":"Response received","data":{"status":200,"path":"/teams/[redacted-id]/users/[redacted-id]"}}
+{"ts":"2026-09-27T06:24:04.763Z","level":"debug","module":"Gateway","msg":"HTTP request complete","data":{"method":"GET","url":"https://api.us-east.bob.ibm.com/admin/v1/teams/[redacted-id]/users/[redacted-id]","status":200,"elapsedMs":306}}
+{"ts":"2026-09-27T06:24:04.783Z","level":"debug","module":"Harness","msg":"Triggered Feature Flag Service update","data":{"ctx":"isIbmInternal","userId":"[redacted-email]","instance_id":"[redacted-id]","hasLegacyTeams":false,"userType":"external"}}
+{"ts":"2026-09-27T06:24:04.834Z","level":"info","module":"MCP:ConfigManager","msg":"Config file listeners initialized"}
+{"ts":"2026-09-27T06:24:04.839Z","level":"debug","module":"MCP","msg":"Updating global config from file","data":{"configPath":"C:\\Users\\dmcca\\.bob\\settings\\mcp.json"}}
+{"ts":"2026-09-27T06:24:04.840Z","level":"debug","module":"MCP","msg":"Global config deleted, cleared global servers"}
+{"ts":"2026-09-27T06:24:04.841Z","level":"info","module":"MCP","msg":"[ws-pre] Initializing MCP for workspace","data":{"workspaceRoot":"c:\\Users\\dmcca\\Documents\\cp-live-final\\ws-pre","blockUntilReady":false}}
+{"ts":"2026-09-27T06:24:04.841Z","level":"debug","module":"MCP","msg":"Creating new workspace registry","data":{"workspaceRoot":"c:\\Users\\dmcca\\Documents\\cp-live-final\\ws-pre"}}
+{"ts":"2026-09-27T06:24:04.842Z","level":"debug","module":"MCP","msg":"Recalculated precedence","data":{"scopeRoot":"c:\\Users\\dmcca\\Documents\\cp-live-final\\ws-pre","totalServers":0,"activeServers":0}}
+{"ts":"2026-09-27T06:24:04.845Z","level":"debug","module":"MCP","msg":"Removed all global servers from deleted config","data":{"workspaceRoot":"c:\\Users\\dmcca\\Documents\\cp-live-final\\ws-pre","configPath":"C:\\Users\\dmcca\\.bob\\settings\\mcp.json","removedCount":0}}
+{"ts":"2026-09-27T06:24:04.845Z","level":"debug","module":"MCP","msg":"Recalculated precedence","data":{"scopeRoot":"c:\\Users\\dmcca\\Documents\\cp-live-final\\ws-pre","totalServers":0,"activeServers":0}}
+{"ts":"2026-09-27T06:24:04.850Z","level":"debug","module":"MCP","msg":"Removed all workspace servers from deleted config","data":{"workspaceRoot":"c:\\Users\\dmcca\\Documents\\cp-live-final\\ws-pre","configPath":"c:\\Users\\dmcca\\Documents\\cp-live-final\\ws-pre\\.bob\\mcp.json","removedCount":0}}
+{"ts":"2026-09-27T06:24:04.850Z","level":"debug","module":"MCP","msg":"Recalculated precedence","data":{"scopeRoot":"c:\\Users\\dmcca\\Documents\\cp-live-final\\ws-pre","totalServers":0,"activeServers":0}}
+{"ts":"2026-09-27T06:24:04.850Z","level":"debug","module":"MCP","msg":"[ws-pre] No active servers for workspace","data":{"workspaceRoot":"c:\\Users\\dmcca\\Documents\\cp-live-final\\ws-pre"}}
+{"ts":"2026-09-27T06:24:05.029Z","level":"debug","module":"Gateway","msg":"Response received","data":{"status":200,"path":"/model/info"}}
+{"ts":"2026-09-27T06:24:05.029Z","level":"debug","module":"Gateway","msg":"HTTP request complete","data":{"method":"GET","url":"https://api.us-east.bob.ibm.com/inference/v1/model/info","status":200,"elapsedMs":567}}
+{"ts":"2026-09-27T06:24:05.239Z","level":"debug","module":"SkillDirectoryWatcher","msg":"Registering dir watcher: root=c:\\Users\\dmcca\\Documents\\cp-live-final\\ws-pre\\.bob\\skills watchGlob=c:\\Users\\dmcca\\Documents\\cp-live-final\\ws-pre\\.bob\\skills/*"}
+{"ts":"2026-09-27T06:24:05.240Z","level":"debug","module":"SkillDirectoryWatcher","msg":"Registering dir watcher: root=c:\\Users\\dmcca\\Documents\\cp-live-final\\ws-pre\\.bob\\plugins\\*\\skills watchGlob=c:\\Users\\dmcca\\Documents\\cp-live-final\\ws-pre\\.bob\\plugins/*/skills/*"}
+{"ts":"2026-09-27T06:24:05.240Z","level":"debug","module":"SkillDirectoryWatcher","msg":"Registering dir watcher: root=c:\\Users\\dmcca\\Documents\\cp-live-final\\ws-pre\\.agents\\skills watchGlob=c:\\Users\\dmcca\\Documents\\cp-live-final\\ws-pre\\.agents\\skills/*"}
+{"ts":"2026-09-27T06:24:05.241Z","level":"debug","module":"SkillDirectoryWatcher","msg":"Registering dir watcher: root=c:\\Users\\dmcca\\Documents\\cp-live-final\\ws-pre\\.claude\\skills watchGlob=c:\\Users\\dmcca\\Documents\\cp-live-final\\ws-pre\\.claude\\skills/*"}
+{"ts":"2026-09-27T06:24:05.241Z","level":"debug","module":"SkillDirectoryWatcher","msg":"Registering dir watcher: root=C:\\Users\\dmcca\\.bob\\skills watchGlob=C:\\Users\\dmcca\\.bob\\skills/*"}
+{"ts":"2026-09-27T06:24:05.242Z","level":"debug","module":"SkillDirectoryWatcher","msg":"Registering dir watcher: root=C:\\Users\\dmcca\\.bob\\plugins\\*\\skills watchGlob=C:\\Users\\dmcca\\.bob\\plugins/*/skills/*"}
+{"ts":"2026-09-27T06:24:05.242Z","level":"debug","module":"SkillDirectoryWatcher","msg":"Registering dir watcher: root=C:\\Users\\dmcca\\.agents\\skills watchGlob=C:\\Users\\dmcca\\.agents\\skills/*"}
+{"ts":"2026-09-27T06:24:05.243Z","level":"debug","module":"SkillDirectoryWatcher","msg":"Registering dir watcher: root=C:\\Users\\dmcca\\.agents\\plugins\\*\\skills watchGlob=C:\\Users\\dmcca\\.agents\\plugins/*/skills/*"}
+{"ts":"2026-09-27T06:24:05.243Z","level":"debug","module":"SkillDirectoryWatcher","msg":"Registering dir watcher: root=C:\\Users\\dmcca\\.claude\\skills watchGlob=C:\\Users\\dmcca\\.claude\\skills/*"}
+{"ts":"2026-09-27T06:24:05.243Z","level":"debug","module":"SkillDirectoryWatcher","msg":"Registering dir watcher: root=C:\\Users\\dmcca\\.claude\\plugins\\*\\skills watchGlob=C:\\Users\\dmcca\\.claude\\plugins/*/skills/*"}
+{"ts":"2026-09-27T06:24:05.245Z","level":"info","module":"Harness","msg":"BobHarness initialized"}
+{"ts":"2026-09-27T06:24:05.245Z","level":"info","module":"Extension","msg":"BobHarness initialized"}
+{"ts":"2026-09-27T06:24:05.245Z","level":"info","module":"Extension","msg":"Configuration initialized"}
+{"ts":"2026-09-27T06:24:05.248Z","level":"info","module":"Extension","msg":"Congratulations, your extension \"IBM Bob\" is now active!"}
+{"ts":"2026-09-27T06:24:05.289Z","level":"info","module":"TaskStore","msg":"Task store opened","data":"C:\\Users\\dmcca\\.bob\\db\\bob.db"}
+{"ts":"2026-09-27T06:24:05.364Z","level":"info","module":"Extension","msg":"Extension activated"}
+{"ts":"2026-09-27T06:24:05.366Z","level":"info","module":"source:bob","msg":"Pull Request Source initialised!"}
+{"ts":"2026-09-27T06:24:05.367Z","level":"info","module":"attribution: index","msg":"Attribution Source initialised!"}
+{"ts":"2026-09-27T06:24:05.392Z","level":"info","module":"attribution: index","msg":"Attribution store opened","data":{"path":"C:\\Users\\dmcca\\.bob\\db\\bob.db"}}
+{"ts":"2026-09-27T06:24:05.392Z","level":"info","module":"attribution: index","msg":"Attribution Source ready - now tracking edit tool executions"}
+{"ts":"2026-09-27T06:24:05.392Z","level":"info","module":"source:review","msg":"Review source registered"}
+{"ts":"2026-09-27T06:24:05.393Z","level":"info","module":"source:review","msg":"Review source enabled"}
+{"ts":"2026-09-27T06:24:05.393Z","level":"info","module":"source:review","msg":"Review workflow registered"}
+{"ts":"2026-09-27T06:24:05.393Z","level":"info","module":"Extension","msg":"Git-dependent features initialized"}
+{"ts":"2026-09-27T06:24:05.472Z","level":"debug","module":"Marketplace:Manager","msg":"RemoteConfigLoader initialized"}
+{"ts":"2026-09-27T06:24:05.473Z","level":"info","module":"Marketplace:Manager","msg":"MarketplaceManager initialized"}
+{"ts":"2026-09-27T06:24:06.123Z","level":"info","module":"Extension","msg":"Webview loaded"}
+{"ts":"2026-09-27T06:24:06.126Z","level":"debug","module":"Gateway","msg":"HTTP request","data":{"method":"GET","url":"https://api.us-east.bob.ibm.com/admin/v1/teams/[redacted-id]/users/[redacted-id]","bodySize":0}}
+{"ts":"2026-09-27T06:24:06.130Z","level":"info","module":"Extension","msg":"Feature flags received"}
+{"ts":"2026-09-27T06:24:06.134Z","level":"info","module":"CommonWebviewHandler","msg":"Webview log:","data":"Webview loaded"}
+{"ts":"2026-09-27T06:24:06.137Z","level":"debug","module":"Gateway","msg":"HTTP request","data":{"method":"GET","url":"https://api.us-east.bob.ibm.com/admin/v1/teams/[redacted-id]/users/[redacted-id]","bodySize":0}}
+{"ts":"2026-09-27T06:24:06.143Z","level":"info","module":"CommonWebviewHandler","msg":"Webview log:","data":"Feature flags received"}
+{"ts":"2026-09-27T06:24:06.214Z","level":"debug","module":"Gateway","msg":"HTTP request","data":{"method":"GET","url":"https://api.us-east.bob.ibm.com/admin/v1/teams/[redacted-id]/users/[redacted-id]","bodySize":0}}
+{"ts":"2026-09-27T06:24:06.257Z","level":"debug","module":"Gateway","msg":"Response received","data":{"status":200,"path":"/teams/[redacted-id]/users/[redacted-id]"}}
+{"ts":"2026-09-27T06:24:06.257Z","level":"debug","module":"Gateway","msg":"HTTP request complete","data":{"method":"GET","url":"https://api.us-east.bob.ibm.com/admin/v1/teams/[redacted-id]/users/[redacted-id]","status":200,"elapsedMs":131}}
+{"ts":"2026-09-27T06:24:06.267Z","level":"debug","module":"Gateway","msg":"Response received","data":{"status":200,"path":"/teams/[redacted-id]/users/[redacted-id]"}}
+{"ts":"2026-09-27T06:24:06.267Z","level":"debug","module":"Gateway","msg":"HTTP request complete","data":{"method":"GET","url":"https://api.us-east.bob.ibm.com/admin/v1/teams/[redacted-id]/users/[redacted-id]","status":200,"elapsedMs":130}}
+{"ts":"2026-09-27T06:24:06.269Z","level":"debug","module":"BobSettingsWebview","msg":"Sent 1 workspace folders to settings webview"}
+{"ts":"2026-09-27T06:24:06.286Z","level":"debug","module":"Gateway","msg":"HTTP request","data":{"method":"GET","url":"https://api.us-east.bob.ibm.com/admin/v1/teams/[redacted-id]/users/[redacted-id]","bodySize":0}}
+{"ts":"2026-09-27T06:24:06.290Z","level":"info","module":"Extension","msg":"ChatPage loaded"}
+{"ts":"2026-09-27T06:24:06.291Z","level":"debug","module":"ChatManager","msg":"Provider initialized for chat manager"}
+{"ts":"2026-09-27T06:24:06.291Z","level":"info","module":"ChatManager","msg":"Creating new task"}
+{"ts":"2026-09-27T06:24:06.296Z","level":"debug","module":"ChatManager","msg":"Task setup complete","taskId":"dd03cd779d1dbb7700cb808a67c49e31","data":"dd03cd779d1dbb7700cb808a67c49e31"}
+{"ts":"2026-09-27T06:24:06.357Z","level":"info","module":"CommonWebviewHandler","msg":"Webview log:","taskId":"dd03cd779d1dbb7700cb808a67c49e31","data":"Received modes: Agent, Plan, Ask"}
+{"ts":"2026-09-27T06:24:06.358Z","level":"info","module":"CommonWebviewHandler","msg":"Webview log:","taskId":"dd03cd779d1dbb7700cb808a67c49e31","data":"Received modes: Agent, Plan, Ask"}
+{"ts":"2026-09-27T06:24:06.402Z","level":"debug","module":"CommonWebviewHandler","msg":"Webview log:","taskId":"dd03cd779d1dbb7700cb808a67c49e31","data":"[SettingsStore] Received 12 tool groups"}
+{"ts":"2026-09-27T06:24:06.403Z","level":"debug","module":"CommonWebviewHandler","msg":"Webview log:","taskId":"dd03cd779d1dbb7700cb808a67c49e31","data":"[SettingsStore] Received 1 workspace folders"}
+{"ts":"2026-09-27T06:24:06.403Z","level":"debug","module":"CommonWebviewHandler","msg":"Webview log:","taskId":"dd03cd779d1dbb7700cb808a67c49e31","data":"[SettingsStore] Received 3 modes"}
+{"ts":"2026-09-27T06:24:06.403Z","level":"debug","module":"CommonWebviewHandler","msg":"Webview log:","taskId":"dd03cd779d1dbb7700cb808a67c49e31","data":"[SettingsStore] Received 10 skills"}
+{"ts":"2026-09-27T06:24:06.419Z","level":"debug","module":"BobFindingsWebview","msg":"Sources changed, updating webview","taskId":"dd03cd779d1dbb7700cb808a67c49e31"}
+{"ts":"2026-09-27T06:24:06.419Z","level":"debug","module":"BobFindingsWebview","msg":"Sending 2 sources to webview:","taskId":"dd03cd779d1dbb7700cb808a67c49e31","data":["refactor","review"]}
+{"ts":"2026-09-27T06:24:06.425Z","level":"info","module":"CommonWebviewHandler","msg":"Webview log:","taskId":"dd03cd779d1dbb7700cb808a67c49e31","data":"Received modes: Agent, Plan, Ask"}
+{"ts":"2026-09-27T06:24:06.426Z","level":"debug","module":"Gateway","msg":"Response received","taskId":"dd03cd779d1dbb7700cb808a67c49e31","data":{"status":200,"path":"/teams/[redacted-id]/users/[redacted-id]"}}
+{"ts":"2026-09-27T06:24:06.427Z","level":"debug","module":"Gateway","msg":"HTTP request complete","taskId":"dd03cd779d1dbb7700cb808a67c49e31","data":{"method":"GET","url":"https://api.us-east.bob.ibm.com/admin/v1/teams/[redacted-id]/users/[redacted-id]","status":200,"elapsedMs":141}}
+{"ts":"2026-09-27T06:24:06.482Z","level":"debug","module":"Gateway","msg":"Response received","taskId":"dd03cd779d1dbb7700cb808a67c49e31","data":{"status":200,"path":"/teams/[redacted-id]/users/[redacted-id]"}}
+{"ts":"2026-09-27T06:24:06.483Z","level":"debug","module":"Gateway","msg":"HTTP request complete","taskId":"dd03cd779d1dbb7700cb808a67c49e31","data":{"method":"GET","url":"https://api.us-east.bob.ibm.com/admin/v1/teams/[redacted-id]/users/[redacted-id]","status":200,"elapsedMs":269}}
+{"ts":"2026-09-27T06:24:06.542Z","level":"info","module":"source:review","msg":"Review source enabled","taskId":"dd03cd779d1dbb7700cb808a67c49e31"}
+{"ts":"2026-09-27T06:24:06.545Z","level":"info","module":"CommonWebviewHandler","msg":"Webview log:","taskId":"dd03cd779d1dbb7700cb808a67c49e31","data":"Feature flags received"}
+{"ts":"2026-09-27T06:24:06.546Z","level":"info","module":"CommonWebviewHandler","msg":"Webview log:","taskId":"dd03cd779d1dbb7700cb808a67c49e31","data":"Feature flags received"}
+{"ts":"2026-09-27T06:27:20.863Z","level":"debug","module":"RuleLoader","msg":"Rules: agents=false gCommon=0 wsCommon=0 gModes=0 wsModes=0","taskId":"dd03cd779d1dbb7700cb808a67c49e31"}
+{"ts":"2026-09-27T06:27:20.876Z","level":"debug","module":"ChatManager","msg":"Starting agent loop","taskId":"dd03cd779d1dbb7700cb808a67c49e31","data":"dd03cd779d1dbb7700cb808a67c49e31"}
+{"ts":"2026-09-27T06:27:20.886Z","level":"debug","module":"ChatManager","msg":"Task setup complete","taskId":"dd03cd779d1dbb7700cb808a67c49e31","data":"dd03cd779d1dbb7700cb808a67c49e31"}
+{"ts":"2026-09-27T06:27:20.888Z","level":"debug","module":"ChatManager","msg":"Task setup complete","taskId":"dd03cd779d1dbb7700cb808a67c49e31","data":"dd03cd779d1dbb7700cb808a67c49e31"}
+{"ts":"2026-09-27T06:27:20.899Z","level":"debug","module":"ChatManager","msg":"Task setup complete","taskId":"dd03cd779d1dbb7700cb808a67c49e31","data":"dd03cd779d1dbb7700cb808a67c49e31"}
+{"ts":"2026-09-27T06:27:20.901Z","level":"debug","module":"ChatManager","msg":"Task setup complete","taskId":"dd03cd779d1dbb7700cb808a67c49e31","data":"dd03cd779d1dbb7700cb808a67c49e31"}
+{"ts":"2026-09-27T06:27:20.912Z","level":"debug","module":"Gateway","msg":"HTTP request","taskId":"dd03cd779d1dbb7700cb808a67c49e31","data":{"method":"POST","url":"https://api.us-east.bob.ibm.com/inference/v1/chat/completions","bodySize":5913}}
+{"ts":"2026-09-27T06:27:20.936Z","level":"debug","module":"RuleLoader","msg":"Rules: agents=false gCommon=0 wsCommon=0 gModes=0 wsModes=0","taskId":"dd03cd779d1dbb7700cb808a67c49e31"}
+{"ts":"2026-09-27T06:27:20.939Z","level":"debug","module":"ChatManager","msg":"Task setup complete","taskId":"dd03cd779d1dbb7700cb808a67c49e31","data":"dd03cd779d1dbb7700cb808a67c49e31"}
+{"ts":"2026-09-27T06:27:20.972Z","level":"debug","module":"Gateway","msg":"HTTP request","taskId":"dd03cd779d1dbb7700cb808a67c49e31","data":{"method":"POST","url":"https://api.us-east.bob.ibm.com/inference/v1/chat/completions","bodySize":24538}}
+{"ts":"2026-09-27T06:27:21.265Z","level":"debug","module":"Gateway","msg":"Response received","taskId":"dd03cd779d1dbb7700cb808a67c49e31","data":{"status":200,"path":"/chat/completions"}}
+{"ts":"2026-09-27T06:27:21.265Z","level":"debug","module":"Gateway","msg":"HTTP request complete","taskId":"dd03cd779d1dbb7700cb808a67c49e31","data":{"method":"POST","url":"https://api.us-east.bob.ibm.com/inference/v1/chat/completions","status":200,"elapsedMs":293}}
+{"ts":"2026-09-27T06:27:21.301Z","level":"debug","module":"Gateway","msg":"HTTP request","taskId":"dd03cd779d1dbb7700cb808a67c49e31","data":{"method":"POST","url":"https://api.us-east.bob.ibm.com/inference/v1/chat/completions","bodySize":56382}}
+{"ts":"2026-09-27T06:27:21.848Z","level":"debug","module":"Gateway","msg":"Response received","taskId":"dd03cd779d1dbb7700cb808a67c49e31","data":{"status":200,"path":"/chat/completions"}}
+{"ts":"2026-09-27T06:27:21.848Z","level":"debug","module":"Gateway","msg":"HTTP request complete","taskId":"dd03cd779d1dbb7700cb808a67c49e31","data":{"method":"POST","url":"https://api.us-east.bob.ibm.com/inference/v1/chat/completions","status":200,"elapsedMs":936}}
+{"ts":"2026-09-27T06:27:22.354Z","level":"debug","module":"Gateway","msg":"Response received","taskId":"dd03cd779d1dbb7700cb808a67c49e31","data":{"status":200,"path":"/chat/completions"}}
+{"ts":"2026-09-27T06:27:22.355Z","level":"debug","module":"Gateway","msg":"HTTP request complete","taskId":"dd03cd779d1dbb7700cb808a67c49e31","data":{"method":"POST","url":"https://api.us-east.bob.ibm.com/inference/v1/chat/completions","status":200,"elapsedMs":1054}}
+{"ts":"2026-09-27T06:27:23.714Z","level":"debug","module":"ChatManager","msg":"Tool invoked","taskId":"dd03cd779d1dbb7700cb808a67c49e31","data":"write_file"}
+{"ts":"2026-09-27T06:27:35.161Z","level":"debug","module":"attribution: index","msg":"Bob made edits with the following tool: ","taskId":"dd03cd779d1dbb7700cb808a67c49e31","data":{"toolName":"write_file"}}
+{"ts":"2026-09-27T06:27:35.162Z","level":"info","module":"attribution: create","msg":"File not in git repository, skipping attribution: c:\\Users\\dmcca\\Documents\\cp-live-final\\ws-pre\\allowed","taskId":"dd03cd779d1dbb7700cb808a67c49e31"}
+{"ts":"2026-09-27T06:27:35.186Z","level":"debug","module":"Gateway","msg":"HTTP request","taskId":"dd03cd779d1dbb7700cb808a67c49e31","data":{"method":"POST","url":"https://api.us-east.bob.ibm.com/inference/v1/chat/completions","bodySize":56799}}
+{"ts":"2026-09-27T06:27:36.587Z","level":"debug","module":"Gateway","msg":"Response received","taskId":"dd03cd779d1dbb7700cb808a67c49e31","data":{"status":200,"path":"/chat/completions"}}
+{"ts":"2026-09-27T06:27:36.588Z","level":"debug","module":"Gateway","msg":"HTTP request complete","taskId":"dd03cd779d1dbb7700cb808a67c49e31","data":{"method":"POST","url":"https://api.us-east.bob.ibm.com/inference/v1/chat/completions","status":200,"elapsedMs":1402}}
+{"ts":"2026-09-27T06:27:37.475Z","level":"debug","module":"Gateway","msg":"HTTP request","taskId":"dd03cd779d1dbb7700cb808a67c49e31","data":{"method":"POST","url":"https://api.us-east.bob.ibm.com/inference/v1/chat/completions","bodySize":57259}}
+{"ts":"2026-09-27T06:27:38.637Z","level":"debug","module":"Gateway","msg":"Response received","taskId":"dd03cd779d1dbb7700cb808a67c49e31","data":{"status":200,"path":"/chat/completions"}}
+{"ts":"2026-09-27T06:27:38.637Z","level":"debug","module":"Gateway","msg":"HTTP request complete","taskId":"dd03cd779d1dbb7700cb808a67c49e31","data":{"method":"POST","url":"https://api.us-east.bob.ibm.com/inference/v1/chat/completions","status":200,"elapsedMs":1162}}
+{"ts":"2026-09-27T06:27:40.485Z","level":"debug","module":"ChatManager","msg":"Task setup complete","taskId":"dd03cd779d1dbb7700cb808a67c49e31","data":"dd03cd779d1dbb7700cb808a67c49e31"}
+{"ts":"2026-09-27T06:27:40.491Z","level":"debug","module":"ChatManager","msg":"Task setup complete","taskId":"dd03cd779d1dbb7700cb808a67c49e31","data":"dd03cd779d1dbb7700cb808a67c49e31"}
+{"ts":"2026-09-27T06:27:40.496Z","level":"debug","module":"ChatManager","msg":"Task setup complete","taskId":"dd03cd779d1dbb7700cb808a67c49e31","data":"dd03cd779d1dbb7700cb808a67c49e31"}
+{"ts":"2026-09-27T06:27:40.501Z","level":"debug","module":"ChatManager","msg":"Task setup complete","taskId":"dd03cd779d1dbb7700cb808a67c49e31","data":"dd03cd779d1dbb7700cb808a67c49e31"}
+{"ts":"2026-09-27T06:27:40.506Z","level":"debug","module":"ChatManager","msg":"Task setup complete","taskId":"dd03cd779d1dbb7700cb808a67c49e31","data":"dd03cd779d1dbb7700cb808a67c49e31"}
+{"ts":"2026-09-27T06:27:40.511Z","level":"debug","module":"ChatManager","msg":"Task setup complete","taskId":"dd03cd779d1dbb7700cb808a67c49e31","data":"dd03cd779d1dbb7700cb808a67c49e31"}
+{"ts":"2026-09-27T06:27:40.552Z","level":"debug","module":"ChatManager","msg":"Agent loop completed","taskId":"dd03cd779d1dbb7700cb808a67c49e31","data":"dd03cd779d1dbb7700cb808a67c49e31"}
+{"ts":"2026-09-27T06:30:36.354Z","level":"debug","module":"Gateway","msg":"HTTP request","taskId":"dd03cd779d1dbb7700cb808a67c49e31","data":{"method":"GET","url":"https://api.us-east.bob.ibm.com/admin/v1/profile","bodySize":0}}
+{"ts":"2026-09-27T06:30:36.702Z","level":"debug","module":"Gateway","msg":"Response received","taskId":"dd03cd779d1dbb7700cb808a67c49e31","data":{"status":200,"path":"/profile"}}
+{"ts":"2026-09-27T06:30:36.702Z","level":"debug","module":"Gateway","msg":"HTTP request complete","taskId":"dd03cd779d1dbb7700cb808a67c49e31","data":{"method":"GET","url":"https://api.us-east.bob.ibm.com/admin/v1/profile","status":200,"elapsedMs":348}}
+{"ts":"2026-09-27T06:30:36.703Z","level":"debug","module":"Gateway","msg":"HTTP request","taskId":"dd03cd779d1dbb7700cb808a67c49e31","data":{"method":"GET","url":"https://api.us-east.bob.ibm.com/admin/v1/teams/[redacted-id]/users/[redacted-id]","bodySize":0}}
+{"ts":"2026-09-27T06:30:36.829Z","level":"debug","module":"Gateway","msg":"Response received","taskId":"dd03cd779d1dbb7700cb808a67c49e31","data":{"status":200,"path":"/teams/[redacted-id]/users/[redacted-id]"}}
+{"ts":"2026-09-27T06:30:36.829Z","level":"debug","module":"Gateway","msg":"HTTP request complete","taskId":"dd03cd779d1dbb7700cb808a67c49e31","data":{"method":"GET","url":"https://api.us-east.bob.ibm.com/admin/v1/teams/[redacted-id]/users/[redacted-id]","status":200,"elapsedMs":126}}
+{"ts":"2026-09-27T06:35:57.814Z","level":"info","module":"Extension","msg":"Extension deactivating","taskId":"dd03cd779d1dbb7700cb808a67c49e31"}
+{"ts":"2026-09-27T06:35:57.814Z","level":"info","module":"TaskManager","msg":"Running task cleanup","taskId":"dd03cd779d1dbb7700cb808a67c49e31"}
+{"ts":"2026-09-27T06:35:57.816Z","level":"debug","module":"authToken","msg":"Disposing BobAuthenticationProvider","taskId":"dd03cd779d1dbb7700cb808a67c49e31"}

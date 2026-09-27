@@ -1,0 +1,7 @@
+{"ts":"2026-09-27T06:15:05.648Z","level":"info","module":"RuntimeLogging","msg":"File logging enabled","taskId":"a9cca91c66d1e191f94a12f1a1ead1cf","data":{"logFilePath":"C:\\Users\\dmcca\\Documents\\cp-live-final\\boblogs\\ibm-bob-hackathon-9fefc2e78c\\bob-ibm-bob-hackathon-p25464-20260926T231505.log"}}
+{"ts":"2026-09-27T06:15:05.659Z","level":"info","module":"RuntimeLogging","msg":"File logging enabled","taskId":"a9cca91c66d1e191f94a12f1a1ead1cf","data":{"logFilePath":"C:\\Users\\dmcca\\Documents\\cp-live-final\\boblogs\\ibm-bob-hackathon-9fefc2e78c\\bob-ibm-bob-hackathon-p25464-20260926T231505.log"}}
+{"ts":"2026-09-27T06:21:28.161Z","level":"debug","module":"BobReviewWebview","msg":"Git state changed in repository: c:\\Users\\dmcca\\Documents\\IBM-Bob-hackathon","taskId":"a9cca91c66d1e191f94a12f1a1ead1cf"}
+{"ts":"2026-09-27T06:21:33.386Z","level":"debug","module":"BobReviewWebview","msg":"Git state changed in repository: c:\\Users\\dmcca\\Documents\\IBM-Bob-hackathon","taskId":"a9cca91c66d1e191f94a12f1a1ead1cf"}
+{"ts":"2026-09-27T06:23:03.447Z","level":"info","module":"Extension","msg":"Extension deactivating","taskId":"a9cca91c66d1e191f94a12f1a1ead1cf"}
+{"ts":"2026-09-27T06:23:03.447Z","level":"info","module":"TaskManager","msg":"Running task cleanup","taskId":"a9cca91c66d1e191f94a12f1a1ead1cf"}
+{"ts":"2026-09-27T06:23:03.453Z","level":"debug","module":"authToken","msg":"Disposing BobAuthenticationProvider","taskId":"a9cca91c66d1e191f94a12f1a1ead1cf"}

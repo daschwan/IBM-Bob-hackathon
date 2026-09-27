@@ -1,0 +1,6 @@
+{
+  "default": "evidence/golden-live",
+  "bundles": {
+    "evidence/golden-live": "3e85e7a69b8bd9957761042f29a05cdcdb527a15998ca89eed3ef3b98b374cb1"
+  }
+}

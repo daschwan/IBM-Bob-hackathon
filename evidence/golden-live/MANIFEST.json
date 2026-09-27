@@ -1,0 +1,21 @@
+{
+  "schema": "controlproof.manifest/1",
+  "files": {
+    "bob_tasks/4ef5f64fc624b3b2ffd18caf765ba0a4.json": "a5dd292044fa4e3fc468ed0b620177fdb5e60fb4835b011b2f9790cca2b0c922",
+    "bob_tasks/5848ba5f5e379ca46103a215551b2f61.json": "95a83cae30031e9e982b521e491323f7f00fd6351483e705101b55769c40f00a",
+    "bob_tasks/dd03cd779d1dbb7700cb808a67c49e31.json": "e42f7ef3c7551d347d13f593434777fecc3cd31a54f6a1fc7e6881e22f1467ef",
+    "boblogs/ibm-bob-hackathon-9fefc2e78c/bob-ibm-bob-hackathon-p25464-20260926T231505.log": "121931c92836dc5bd5a29b621d014282eee459c85a07b56e52c78313fe3c3839",
+    "boblogs/ws-badcfg-26bd14b11d/bob-ws-badcfg-p17468-20260927T001047.log": "aa77a7d7404432bfad888731bf09a3c38e77793ecaaf1131c5ca00dba4ce4070",
+    "boblogs/ws-post-b2e7e94f7a/bob-ws-post-p26356-20260926T233612.log": "b71319fcadbeec9682f09646c5f875df8a2956f09207ad7f4a6981e1ca4a3738",
+    "boblogs/ws-pre-54aef276ea/bob-ws-pre-p26840-20260926T232358.log": "ac239c94cb50126fc7875a05fb86da461e798855336e8880af00e8c41f8fbaf8",
+    "configs/ws-badcfg.settings.json": "2dfb55d876ca7681208c10516dc7d2a0d6f2c3e442f45aa8350568b44227895c",
+    "configs/ws-post.settings.json": "8d6ce42011ead5e39f3b149691afee87e942a30cd518f5a9799662009469448d",
+    "configs/ws-pre.settings.json": "85c2992324107e81aebb8db3284e66e8a92a79aae7e8480f24e3cd39ac3db168",
+    "hook/controlproof_hook.py": "5db2ea466a4c7e8f353adc5e6e2740164317594886770fa8076c2e4f4e1bc92e",
+    "ledger.jsonl": "3128feb12faef0bb392dedfee0665f6c29a9290b4f817199309378082854d6f6",
+    "RUN.json": "e8ca2c59387920a3c5ee30daf922dec6fd6bc67db0380b4e8b5bfba01718e955",
+    "snapshots/ws-badcfg.AFTER.json": "a145a6aa82035baecfe99b073049d6f30d44ac8e9908fc8f351ffe210a09bb1f",
+    "snapshots/ws-post.AFTER.json": "0dd14115fb0baf534e6e94240ffa3dfdd96e794fa4ba7b1e840886cdb32675b1",
+    "snapshots/ws-pre.AFTER.json": "e396ae43e831f829f25987bb75d2d488f388a787bb58186c414a9a3a418126bc"
+  }
+}

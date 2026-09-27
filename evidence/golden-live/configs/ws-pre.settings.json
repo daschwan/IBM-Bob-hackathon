@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "^(write_file|apply_diff|search_and_replace|insert_content)$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"C:\\Python312\\python.exe\" \"C:\\Users\\dmcca\\Documents\\IBM-Bob-hackathon\\hook\\controlproof_hook.py\" CP-001-PRE --ledger \"C:\\Users\\dmcca\\Documents\\cp-live-final\\evidence\\ledger.jsonl\" --nonce 968e38fd534903dd",
+            "timeout": 15
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -5,3 +5,5 @@
 *.db binary
 *.mp4 binary
 *.pdf binary
+# Captured evidence bundles are pinned by exact bytes: never convert line endings.
+evidence/** -text

@@ -1,0 +1,8 @@
+{
+  "schema": "controlproof.snapshot/1",
+  "workspace": "ws-post",
+  "files": [
+    "allowed/probe.txt",
+    "protected/test.txt"
+  ]
+}
